@@ -30,6 +30,7 @@ int otrogiro=0;
 
 float camaraZ = 0.0;
 float camaraX = 0.0;
+float camaraY = 0.0;
 
 GLfloat SunDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };			// Diffuse Light Values
 GLfloat SunSpecular[] = { 1.0, 1.0, 1.0, 1.0 };				// Specular Light Values
@@ -64,13 +65,74 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glTranslatef(camaraX,0.0,-5.0+camaraZ);			//camara
+	glTranslatef(camaraX,camaraY,-5.0+camaraZ);			//camara
 	glPushMatrix();	
-		glRotatef(sol,0.0,1.0,0.0);	//El Sol gira sobre su eje
-		glColor3f( 1.0,1.0,0.0 );	//Sol amarillo
-		glutWireSphere(2.0,12,12);  //Draw Sun (radio,H,V);---Alambre
+		glRotatef(sol,0.0,1.0,0.0);	//nucleo
+		glColor3f( 0.0,0.0,1.0 );	//Sol amarillo
+		glutWireSphere(1.5,12,12);  //Draw Sun (radio,H,V);---Alambre
 	glPopMatrix();
-	
+	//Proton--Neutron
+	glPushMatrix();
+		glColor3f(1.0,0.0,0.0);			
+		//glRotatef(luna,0.0,0.0,1.0);
+		glTranslatef(0.7,0.2,0.2);
+		glRotatef(luna+2,1.0,0.0,0.0);
+		glutWireSphere(1.5,12,12); 
+	glPopMatrix();
+	//Proton--Neutron
+	glPushMatrix();
+		glColor3f(1.0,0.0,0.0);			
+		//glRotatef(luna,0.0,0.0,1.0);
+		glTranslatef(-0.7,0.2,0.2);
+		glRotatef(luna+2,0.0,0.0,1.0);
+		glutWireSphere(1.5,12,12); 
+	glPopMatrix();
+	//electron
+	glPushMatrix();
+		glRotatef(otrogiro+5,0.0,-1.0,0.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(3.5,0.0,0.0);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+	//electron
+	glPushMatrix();
+		glRotatef(otrogiro+3,0.0,1.0,0.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(5.5,0.0,0.0);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+	glPushMatrix();
+		glRotatef(otrogiro+3,0.0,1.0,1.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(6.5,0.2,0.2);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+	glPushMatrix();
+		glRotatef(otrogiro+3,0.0,-1.0,-1.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(7.5,0.2,0.2);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+	glPushMatrix();
+		glRotatef(otrogiro,0.0,-1.0,-1.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(6.5,-2.2,-2.2);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+	glPushMatrix();
+		glRotatef(otrogiro,0.0,1.0,1.0);
+		glColor3f(0.0,1.0,0.0);
+		glTranslatef(7.5,-2.2,-2.2);
+		glRotatef(mercurio,0.0,1.0,0.0);
+		glutWireSphere(0.3,10,10); 
+	glPopMatrix();
+
+	/*
 	//mercurio
 	glPushMatrix();
 		glRotatef(otrogiro+5,0.0,-1.0,-1.0);
@@ -218,7 +280,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glTranslatef(14.,0.2,0.2);
 		glRotatef(urano,0.0,1.0,0.0);
 		glutWireSphere(0.35,10,10); 
-	glPopMatrix();
+	glPopMatrix();*/
 
 	//glPopMatrix();
 	glutSwapBuffers ( );
@@ -290,6 +352,14 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'd':
 		case 'D':
 			camaraX += 0.5f;
+			break;
+		case 'q':
+		case 'Q':
+			camaraY -= 0.5f;
+			break;
+		case 'e':
+		case 'E':
+			camaraY += 0.5f;
 			break;
 
 		case 'i':		//Movimientos de Luz
